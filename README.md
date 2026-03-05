@@ -84,10 +84,11 @@ Backups of the network state are created automatically before and after each rot
 
 1. In HACS, go to **Integrations** and click the three-dot menu.
 2. Select **Custom repositories**.
-3. Paste the repository URL and select category **Integration**.
-4. Install **Zigbee Network Key Rotation**.
-5. Restart Home Assistant.
-6. Go to **Settings > Devices & Services > Add Integration** and search for "Zigbee Network Key Rotation".
+3. Paste `https://github.com/renaudallard/homeassistant_zigbee_key_rotate` and select category **Integration**.
+4. Click **Add**.
+5. Search for **Zigbee Network Key Rotation** in the HACS integrations list and click **Download**.
+6. Restart Home Assistant.
+7. Go to **Settings > Devices & Services > Add Integration** and search for "Zigbee Network Key Rotation".
 
 ### Manual
 
