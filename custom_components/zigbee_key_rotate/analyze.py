@@ -50,13 +50,18 @@ CLUSTER_BASIC = 0x0000
 KNOWN_QUIRKY_MANUFACTURERS = {
     "LUMI": (
         "Xiaomi/Aqara devices are documented to use non-standard join and "
-        "rejoin mechanisms. They may drop off the network after key rotation "
-        "and require re-pairing."
+        "rejoin mechanisms. They will likely drop off the network after key "
+        "rotation and require re-pairing."
     ),
     "Xiaomi": (
         "Xiaomi devices are documented to use non-standard join and "
-        "rejoin mechanisms. They may drop off the network after key rotation "
-        "and require re-pairing."
+        "rejoin mechanisms. They will likely drop off the network after key "
+        "rotation and require re-pairing."
+    ),
+    "Aqara": (
+        "Aqara devices are documented to use non-standard join and "
+        "rejoin mechanisms. They will likely drop off the network after key "
+        "rotation and require re-pairing."
     ),
 }
 
@@ -337,7 +342,7 @@ def _check_manufacturer_quirks(device: Any) -> list[dict[str, str]]:
         if mfr_key.lower() in manufacturer.lower():
             issues.append(
                 {
-                    "severity": "warning",
+                    "severity": "critical",
                     "category": "key_rotation",
                     "message": note,
                 }
