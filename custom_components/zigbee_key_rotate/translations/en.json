@@ -1,0 +1,54 @@
+{
+  "entity": {
+    "sensor": {
+      "network_key": {
+        "name": "Network key"
+      },
+      "key_sequence": {
+        "name": "Key sequence"
+      },
+      "radio_type": {
+        "name": "Radio type"
+      },
+      "channel": {
+        "name": "Channel"
+      },
+      "pan_id": {
+        "name": "PAN ID"
+      },
+      "network_readiness": {
+        "name": "Network readiness"
+      },
+      "devices_at_risk": {
+        "name": "Devices at risk"
+      }
+    },
+    "button": {
+      "analyze_network": {
+        "name": "Analyze network"
+      },
+      "rotate_network_key": {
+        "name": "Rotate network key"
+      }
+    },
+    "number": {
+      "broadcast_count": {
+        "name": "Broadcast count"
+      },
+      "switch_delay": {
+        "name": "Switch delay"
+      }
+    }
+  },
+  "config": {
+    "step": {
+      "user": {
+        "title": "Zigbee Network Key Rotation",
+        "description": "This integration adds services to rotate your Zigbee network encryption key without re-pairing devices. Requires the ZHA integration to be configured."
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Already configured."
+    }
+  }
+}

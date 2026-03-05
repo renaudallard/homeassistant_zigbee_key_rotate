@@ -1,0 +1,32 @@
+rotate_network_key:
+  fields:
+    new_key:
+      required: false
+      selector:
+        text:
+    broadcast_count:
+      required: false
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 20
+          mode: box
+    switch_delay:
+      required: false
+      default: 30
+      selector:
+        number:
+          min: 5
+          max: 300
+          unit_of_measurement: "s"
+          mode: box
+
+get_network_key_info:
+
+analyze_devices:
+  fields:
+    ieee:
+      required: false
+      selector:
+        text:

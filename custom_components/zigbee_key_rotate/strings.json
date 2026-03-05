@@ -1,0 +1,88 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Zigbee Network Key Rotation",
+        "description": "This integration adds services to rotate your Zigbee network encryption key without re-pairing devices. Requires the ZHA integration to be configured."
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Already configured."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "network_key": {
+        "name": "Network key"
+      },
+      "key_sequence": {
+        "name": "Key sequence"
+      },
+      "radio_type": {
+        "name": "Radio type"
+      },
+      "channel": {
+        "name": "Channel"
+      },
+      "pan_id": {
+        "name": "PAN ID"
+      },
+      "network_readiness": {
+        "name": "Network readiness"
+      },
+      "devices_at_risk": {
+        "name": "Devices at risk"
+      }
+    },
+    "button": {
+      "analyze_network": {
+        "name": "Analyze network"
+      },
+      "rotate_network_key": {
+        "name": "Rotate network key"
+      }
+    },
+    "number": {
+      "broadcast_count": {
+        "name": "Broadcast count"
+      },
+      "switch_delay": {
+        "name": "Switch delay"
+      }
+    }
+  },
+  "services": {
+    "rotate_network_key": {
+      "name": "Rotate network key",
+      "description": "Rotate the Zigbee network encryption key. Distributes a new key to all devices and then switches to it.",
+      "fields": {
+        "new_key": {
+          "name": "New key",
+          "description": "Hex string for the new 16-byte network key (e.g. '01020304050607080910111213141516'). If omitted, a random key is generated."
+        },
+        "broadcast_count": {
+          "name": "Broadcast count",
+          "description": "Number of times to broadcast the new key before switching (default: 5)."
+        },
+        "switch_delay": {
+          "name": "Switch delay",
+          "description": "Seconds to wait between distributing the new key and sending the switch command (default: 30). Increase for networks with many sleepy devices."
+        }
+      }
+    },
+    "get_network_key_info": {
+      "name": "Get network key info",
+      "description": "Returns current Zigbee network key information."
+    },
+    "analyze_devices": {
+      "name": "Analyze devices",
+      "description": "Analyze Zigbee devices for 3.0 compliance and key rotation readiness. Returns per-device risk assessments and a network summary.",
+      "fields": {
+        "ieee": {
+          "name": "IEEE address",
+          "description": "Analyze a single device by its IEEE address (e.g. '00:11:22:33:44:55:66:77'). If omitted, all devices are analyzed."
+        }
+      }
+    }
+  }
+}
