@@ -66,7 +66,7 @@
         },
         "switch_delay": {
           "name": "Switch delay",
-          "description": "Seconds to wait between distributing the new key and sending the switch command (default: 30). Increase for networks with many sleepy devices."
+          "description": "Seconds to wait between distributing the new key and sending the switch command (default: 300)."
         }
       }
     },

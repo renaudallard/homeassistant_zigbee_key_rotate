@@ -130,7 +130,7 @@ Both buttons guard against concurrent presses.
 | Entity | Range | Default | Description |
 |:-------|:------|:--------|:------------|
 | **Broadcast count** | 1 .. 20 | 5 | Number of times to broadcast the new key before switching. |
-| **Switch delay** | 5 .. 300 s | 30 | Seconds to wait between key distribution and the switch command. |
+| **Switch delay** | 5 .. 300 s | 300 | Seconds to wait between key distribution and the switch command. |
 
 These values are used by the **Rotate network key** button. They reset to defaults on HA restart.
 
@@ -245,7 +245,7 @@ Perform the two-phase key rotation. Supports **response data** (returns old key,
 |:----------|:-----|:--------|:------------|
 | `new_key` | string | *(random)* | 32-character hex string for the new key. A cryptographically random key is generated if omitted. |
 | `broadcast_count` | int | `5` | Number of times to broadcast the new key before switching (1 .. 20). |
-| `switch_delay` | int | `30` | Seconds to wait between key distribution and the switch command (5 .. 300). |
+| `switch_delay` | int | `300` | Seconds to wait between key distribution and the switch command (5 .. 300). |
 
 **Example with a specific key:**
 
