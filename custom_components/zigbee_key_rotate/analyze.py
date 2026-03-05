@@ -83,19 +83,6 @@ def _check_node_descriptor(device: Any) -> list[dict[str, str]]:
 
     nd = device.node_desc
 
-    if not nd.is_security_capable:
-        issues.append(
-            {
-                "severity": "critical",
-                "category": "security",
-                "message": (
-                    "Device does not advertise security capability in its node descriptor. "
-                    "Zigbee 3.0 requires all devices to support APS-layer security. "
-                    "This device will likely fail to process a network key update."
-                ),
-            }
-        )
-
     if nd.is_end_device and not nd.is_receiver_on_when_idle:
         issues.append(
             {
@@ -392,12 +379,7 @@ def _assess_rotation_risk(issues: list[dict[str, str]], device: Any) -> str:
     has_critical = any(i["severity"] == "critical" for i in issues)
     warnings = [i for i in issues if i["severity"] == "warning"]
     has_key_rotation_warning = any(i["category"] == "key_rotation" for i in warnings)
-    has_security_critical = any(
-        i["severity"] == "critical" and i["category"] == "security" for i in issues
-    )
 
-    if has_security_critical:
-        return "critical"
     if has_critical:
         return "high"
     if has_key_rotation_warning:
