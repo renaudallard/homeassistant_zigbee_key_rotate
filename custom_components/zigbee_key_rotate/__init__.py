@@ -44,6 +44,7 @@ from .const import (
     SERVICE_GET_KEY_INFO,
     SERVICE_ROTATE_KEY,
 )
+from .helpers import get_zigpy_app
 from .rotate import get_network_key_info, parse_key_hex, rotate_network_key
 
 
@@ -80,20 +81,6 @@ ROTATE_KEY_SCHEMA = vol.Schema(
 )
 
 
-def _get_zigpy_app(hass: HomeAssistant):
-    """Get the zigpy application controller from ZHA."""
-    from homeassistant.components.zha.helpers import get_zha_gateway
-
-    try:
-        gateway = get_zha_gateway(hass)
-    except ValueError as err:
-        raise HomeAssistantError(
-            "ZHA gateway is not running. Ensure the ZHA integration is set up and active."
-        ) from err
-
-    return gateway.application_controller
-
-
 async def async_setup_entry(
     hass: HomeAssistant, entry: ZigbeeKeyRotateConfigEntry
 ) -> bool:
@@ -102,14 +89,14 @@ async def async_setup_entry(
     entry.runtime_data = data
 
     try:
-        app = _get_zigpy_app(hass)
+        app = get_zigpy_app(hass)
         data.key_info = get_network_key_info(app)
     except HomeAssistantError:
         _LOGGER.warning("Could not fetch initial key info. ZHA may not be ready yet.")
 
     async def handle_rotate_key(call: ServiceCall) -> dict:
         """Handle the rotate_network_key service call."""
-        app = _get_zigpy_app(hass)
+        app = get_zigpy_app(hass)
 
         new_key = None
         if "new_key" in call.data and call.data["new_key"]:
@@ -140,7 +127,7 @@ async def async_setup_entry(
 
     async def handle_get_key_info(call: ServiceCall) -> dict:
         """Handle the get_network_key_info service call."""
-        app = _get_zigpy_app(hass)
+        app = get_zigpy_app(hass)
         return get_network_key_info(app)
 
     hass.services.async_register(
@@ -160,7 +147,7 @@ async def async_setup_entry(
 
     async def handle_analyze(call: ServiceCall) -> dict:
         """Handle the analyze_devices service call."""
-        app = _get_zigpy_app(hass)
+        app = get_zigpy_app(hass)
 
         ieee = call.data.get("ieee")
         if ieee:

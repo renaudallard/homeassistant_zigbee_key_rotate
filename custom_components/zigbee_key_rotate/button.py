@@ -35,10 +35,10 @@ from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from . import _get_zigpy_app
 from .analyze import analyze_network
 from .const import SIGNAL_ANALYSIS_UPDATED, SIGNAL_KEY_INFO_UPDATED
 from .entity import ZigbeeKeyRotateEntity
+from .helpers import get_zigpy_app
 from .rotate import get_network_key_info, rotate_network_key
 
 if TYPE_CHECKING:
@@ -103,14 +103,14 @@ class ZigbeeKeyRotateButton(ZigbeeKeyRotateEntity, ButtonEntity):
 
     async def _analyze(self) -> None:
         """Run network analysis."""
-        app = _get_zigpy_app(self.hass)
+        app = get_zigpy_app(self.hass)
         result = analyze_network(app)
         self._data.analysis = result
         async_dispatcher_send(self.hass, f"{SIGNAL_ANALYSIS_UPDATED}_{self._entry_id}")
 
     async def _rotate(self) -> None:
         """Run key rotation."""
-        app = _get_zigpy_app(self.hass)
+        app = get_zigpy_app(self.hass)
         broadcast_count = int(self._data.number_values["broadcast_count"])
         switch_delay = self._data.number_values["switch_delay"]
 
