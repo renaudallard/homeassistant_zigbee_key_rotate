@@ -136,11 +136,11 @@ SENSOR_DESCRIPTIONS: tuple[ZigbeeKeyRotateSensorDescription, ...] = (
                 "risk_breakdown": d["summary"]["risk_breakdown"],
                 **{
                     f"{level}_devices": [
-                        f"{dev['manufacturer']} {dev['model']} ({dev['ieee']})"
+                        f"{dev.get('name') or dev['model']} ({dev['ieee']})"
                         for dev in d["devices"]
                         if dev["rotation_risk"] == level
                     ]
-                    for level in ("critical", "high", "medium")
+                    for level in ("critical", "high", "medium", "low")
                     if any(dev["rotation_risk"] == level for dev in d["devices"])
                 },
             }

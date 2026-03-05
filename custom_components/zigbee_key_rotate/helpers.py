@@ -24,8 +24,11 @@
 
 """Helper utilities for Zigbee Key Rotate."""
 
+from typing import Any
+
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers import device_registry as dr
 
 
 def get_zigpy_app(hass: HomeAssistant):
@@ -40,3 +43,14 @@ def get_zigpy_app(hass: HomeAssistant):
         ) from err
 
     return gateway.application_controller
+
+
+def enrich_with_device_names(hass: HomeAssistant, analysis: dict[str, Any]) -> None:
+    """Add HA device friendly names to analysis results."""
+    dev_reg = dr.async_get(hass)
+    for device in analysis.get("devices", []):
+        ieee = device.get("ieee")
+        if ieee is None:
+            continue
+        entry = dev_reg.async_get_device(identifiers={("zha", ieee)})
+        device["name"] = (entry.name_by_user or entry.name) if entry else None

@@ -44,7 +44,7 @@ from .const import (
     SERVICE_GET_KEY_INFO,
     SERVICE_ROTATE_KEY,
 )
-from .helpers import get_zigpy_app
+from .helpers import enrich_with_device_names, get_zigpy_app
 from .rotate import get_network_key_info, parse_key_hex, rotate_network_key
 
 
@@ -165,7 +165,9 @@ async def async_setup_entry(
             key_table = getattr(app.state.network_info, "key_table", [])
             return analyze_single_device(device, key_table)
 
-        return analyze_network(app)
+        result = analyze_network(app)
+        enrich_with_device_names(hass, result)
+        return result
 
     hass.services.async_register(
         DOMAIN,

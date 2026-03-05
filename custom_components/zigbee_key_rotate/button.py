@@ -38,7 +38,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from .analyze import analyze_network
 from .const import SIGNAL_ANALYSIS_UPDATED, SIGNAL_KEY_INFO_UPDATED
 from .entity import ZigbeeKeyRotateEntity
-from .helpers import get_zigpy_app
+from .helpers import enrich_with_device_names, get_zigpy_app
 from .rotate import get_network_key_info, rotate_network_key
 
 if TYPE_CHECKING:
@@ -105,6 +105,7 @@ class ZigbeeKeyRotateButton(ZigbeeKeyRotateEntity, ButtonEntity):
         """Run network analysis."""
         app = get_zigpy_app(self.hass)
         result = analyze_network(app)
+        enrich_with_device_names(self.hass, result)
         self._data.analysis = result
         async_dispatcher_send(self.hass, f"{SIGNAL_ANALYSIS_UPDATED}_{self._entry_id}")
 
